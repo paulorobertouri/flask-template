@@ -1,0 +1,45 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "type": "docker-build",
+      "label": "docker-test",
+      "dockerBuild": {
+        "dockerfile": "${workspaceFolder}/docker/test.Dockerfile",
+        "context": "${workspaceFolder}",
+        "tag": "pytest-debug",
+        "pull": true
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-test-run",
+      "dependsOn": ["docker-test"],
+      "python": {
+        "module": "pytest",
+        "args": ["--cov", "--cov-report=term", "--cov-report=term-missing"]
+      }
+    },
+    {
+      "type": "docker-build",
+      "label": "docker-build",
+      "dockerBuild": {
+        "dockerfile": "${workspaceFolder}/docker/build.Dockerfile",
+        "context": "${workspaceFolder}",
+        "tag": "fastapi-debug",
+        "pull": true
+      }
+    },
+    {
+      "type": "docker-run",
+      "label": "docker-build-run",
+      "dependsOn": ["docker-build"],
+      "python": {
+        "file": "main.py"
+      },
+      "dockerRun": {
+        "ports": [{ "hostPort": 8000, "containerPort": 8000 }]
+      }
+    }
+  ]
+}

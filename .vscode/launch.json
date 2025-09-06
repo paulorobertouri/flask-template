@@ -1,0 +1,92 @@
+{
+  "version": "0.1.0",
+  "configurations": [
+    {
+      "name": "API: Debug",
+      "type": "debugpy",
+      "request": "launch",
+      "program": "${workspaceFolder}/main.py",
+      "envFile": "${workspaceFolder}/.env",
+      "jinja": true
+    },
+    {
+      "name": "API: Debug, VENV (Ubuntu)",
+      "type": "debugpy",
+      "request": "launch",
+      "console": "internalConsole",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "program": "${workspaceFolder}/main.py",
+      "envFile": "${workspaceFolder}/.env",
+      "jinja": true
+    },
+    {
+      "name": "API: Debug, VENV (Windows)",
+      "type": "debugpy",
+      "request": "launch",
+      "console": "internalConsole",
+      "python": "${workspaceFolder}/.venv/Scripts/python",
+      "program": "${workspaceFolder}/main.py",
+      "envFile": "${workspaceFolder}/.env",
+      "jinja": true
+    },
+    {
+      "name": "API: Debug (Docker)",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-build-run",
+      "python": {
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app"
+          }
+        ],
+        "projectType": "fastapi",
+        "envFile": "${workspaceFolder}/.env",
+        "jinja": true
+      }
+    },
+    {
+      "name": "API: Test",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "pytest",
+      "jinja": true
+    },
+    {
+      "name": "API: Test, VENV (Ubuntu)",
+      "type": "debugpy",
+      "request": "launch",
+      "console": "internalConsole",
+      "python": "${workspaceFolder}/.venv/bin/python",
+      "module": "pytest",
+      "jinja": true
+    },
+    {
+      "name": "API: Test, VENV (Windows)",
+      "type": "debugpy",
+      "request": "launch",
+      "console": "internalConsole",
+      "python": "${workspaceFolder}/.venv/Scripts/python",
+      "module": "pytest",
+      "jinja": true
+    },
+    {
+      "name": "API: Test (Docker)",
+      "type": "docker",
+      "request": "launch",
+      "preLaunchTask": "docker-test-run",
+      "python": {
+        "pathMappings": [
+          {
+            "localRoot": "${workspaceFolder}",
+            "remoteRoot": "/app"
+          }
+        ],
+        "projectType": "general",
+        "envFile": "${workspaceFolder}/.env",
+        "jinja": true
+      }
+    }
+  ]
+}

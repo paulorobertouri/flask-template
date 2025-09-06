@@ -1,0 +1,10 @@
+flake8
+isort
+mypy
+pre-commit
+pyright
+pytest
+pytest-cov
+pytest-flask
+pytest-md-report
+pytest-mock

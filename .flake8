@@ -1,0 +1,24 @@
+[flake8]
+ignore = E501, W503
+max-line-length = 80
+max-complexity = 10
+select = B,C,E,F,W,T4,B9
+exclude =
+    node_modules
+    __pycache__
+    .git
+    .github
+    .hg
+    .mypy_cache
+    .tox
+    .venv
+    .py-venv
+    venv
+    py-venv
+    _build
+    buck-out
+    build
+    dist
+    # The following are specific to Black, you probably don't want those.
+    blib2to3
+    tests/data

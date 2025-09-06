@@ -1,0 +1,127 @@
+[tool.pytest.ini_options]
+filterwarnings = [
+    "error",
+    "ignore::UserWarning",
+    "ignore::DeprecationWarning",
+    "ignore::FutureWarning"
+]
+markers = [
+    "component = Component tests"
+]
+dirs = "tests"
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 80
+include_trailing_comma = true
+skip_glob = [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.git",
+    "**/.github",
+    "**/.hg",
+    "**/.mypy_cache",
+    "**/.tox",
+    "**/.venv",
+    "**/.py-venv",
+    "**/venv",
+    "**/py-venv",
+    "**/_build",
+    "**/buck-out",
+    "**/build",
+    "**/dist",
+    "**/htmlcov",
+
+    # The following are specific to Black, you probably don't want those.
+    "**/blib2to3",
+    "**/tests/data"
+]
+
+[tool.coverage.run]
+omit = [
+    "**/tests/*",
+    "**/debugpy/*"
+]
+
+[tool.black]
+include = '\.pyi?$'
+line-length = 80
+exclude = '''
+/(
+    node_modules
+    | __pycache__
+    | \.git
+    | \.github
+    | \.hg
+    | \.mypy_cache
+    | \.tox
+    | \.venv
+    | \.py-venv
+    | \venv
+    | py-venv
+    | _build
+    | buck-out
+    | build
+    | dist
+
+    # The following are specific to Black, you probably don't want those.
+    | blib2to3
+    | tests/data
+)
+'''
+
+[tool.mypy]
+python_version = 3.12
+ignore_missing_imports = true
+exclude = [
+    "node_modules",
+    "__pycache__",
+    ".git",
+    ".github",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    ".py-venv",
+    "venv",
+    "py-venv",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "htmlcov",
+
+    # The following are specific to Black, you probably don't want those.
+    "blib2to3",
+    "tests/data"
+]
+
+[tool.pyright]
+venvPath = "."
+venv = ".venv"
+pythonVersion = "3.12"
+pythonPlatform = "All"
+typeCheckingMode = "standard"
+exclude = [
+    "**/node_modules",
+    "**/__pycache__",
+    "**/.git",
+    "**/.github",
+    "**/.hg",
+    "**/.mypy_cache",
+    "**/.tox",
+    "**/.venv",
+    "**/.py-venv",
+    "**/venv",
+    "**/py-venv",
+    "**/_build",
+    "**/buck-out",
+    "**/build",
+    "**/dist",
+    "**/htmlcov",
+
+    # The following are specific to Black, you probably don't want those.
+    "**/blib2to3",
+    "**/tests/data"
+]
