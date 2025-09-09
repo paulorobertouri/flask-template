@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>User Management</title>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+		<style>
+			body {
+				background: #f4f6f8;
+				min-height: 100vh;
+				font-family: 'Segoe UI', 'Roboto', 'Arial', sans-serif;
+				color: #23272f;
+			}
+			main.container {
+				max-width: 900px;
+				margin: 48px auto 0 auto;
+				background: #fff;
+				border-radius: 10px;
+				box-shadow: 0 2px 12px rgba(0,0,0,0.06);
+				padding: 2.5rem 2rem 2rem 2rem;
+			}
+			.navbar {
+				background: #fff !important;
+				border-bottom: 1px solid #e5e7eb;
+				border-radius: 0 0 10px 10px;
+				box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+			}
+			.navbar-brand {
+				color: #23272f !important;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+			}
+			.table-responsive {
+				background: #f8fafc;
+				border-radius: 8px;
+				padding: 1.2rem 1rem 1rem 1rem;
+				margin-bottom: 1.5rem;
+				border: 1px solid #e5e7eb;
+			}
+			table.table {
+				border-radius: 8px;
+				overflow: hidden;
+				margin-bottom: 0;
+			}
+			thead.table-light th {
+				position: sticky;
+				top: 0;
+				background: #f3f4f6;
+				z-index: 2;
+				border-bottom: 2px solid #e5e7eb;
+				font-weight: 600;
+				color: #23272f;
+			}
+			tbody tr {
+				transition: background 0.18s;
+			}
+			tbody tr:hover {
+				background: #f5f7fa;
+			}
+			.btn-primary, .btn-info, .btn-danger, .btn-success, .btn-secondary {
+				border-radius: 5px;
+				transition: box-shadow 0.13s, background 0.13s;
+				font-weight: 500;
+				box-shadow: none;
+				border: none;
+			}
+			.btn-primary {
+				background: #2563eb;
+				color: #fff;
+			}
+			.btn-primary:hover {
+				background: #1746a2;
+				color: #fff;
+			}
+			.btn-info {
+				background: #64748b;
+				color: #fff;
+			}
+			.btn-info:hover {
+				background: #475569;
+				color: #fff;
+			}
+			.btn-danger {
+				background: #e11d48;
+				color: #fff;
+			}
+			.btn-danger:hover {
+				background: #b91c1c;
+				color: #fff;
+			}
+			.btn-success {
+				background: #059669;
+				color: #fff;
+			}
+			.btn-success:hover {
+				background: #047857;
+				color: #fff;
+			}
+			.btn-secondary {
+				background: #e5e7eb;
+				color: #23272f;
+			}
+			.btn-secondary:hover {
+				background: #cbd5e1;
+				color: #23272f;
+			}
+			.modal-content {
+				border-radius: 8px;
+				box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+			}
+			.modal-header {
+				border-bottom: 1px solid #e5e7eb;
+				background: #f8fafc;
+			}
+			.modal-footer {
+				border-top: 1px solid #e5e7eb;
+				background: #f8fafc;
+			}
+			.form-label {
+				font-weight: 500;
+				color: #23272f;
+			}
+			#formError {
+				margin-bottom: 1rem;
+			}
+			@media (max-width: 600px) {
+				main.container {
+					padding: 1rem 0.5rem;
+				}
+				.table-responsive {
+					padding: 0.5rem;
+				}
+			}
+		</style>
+</head>
+<body>
+<nav class="navbar navbar-expand-lg mb-4">
+	<div class="container-fluid">
+		<a class="navbar-brand" href="#"><i class="fa fa-users me-2 text-primary"></i>User Management</a>
+	</div>
+</nav>
+<main class="container">
+	<!-- Global Alert -->
+	<div id="globalAlert" class="alert alert-danger alert-dismissible fade show d-none" role="alert">
+		<span id="globalAlertMsg"></span>
+		<button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+	</div>
+			<div class="d-flex justify-content-between align-items-center mb-4">
+				<h2 class="mb-0 fw-bold" style="font-size:1.6rem;"><i class="fa fa-users text-primary me-2"></i>Users</h2>
+				<button class="btn btn-primary px-4 py-2" data-bs-toggle="modal" data-bs-target="#userModal" id="addUserBtn">
+					<i class="fa fa-user-plus me-2"></i> Add User
+				</button>
+			</div>
+			<div class="table-responsive">
+			<table class="table table-hover align-middle mb-0" id="usersTable">
+				<thead class="table-light">
+					<tr>
+						<th style="width: 60px;">ID</th>
+						<th>Name</th>
+						<th>Email</th>
+						<th class="text-center" style="width: 120px;">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					<!-- User rows will be inserted here -->
+				</tbody>
+			</table>
+		</div>
+</main>
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-danger" id="confirmDeleteModalLabel"><i class="fa fa-exclamation-triangle me-2"></i>Confirm Delete</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<p class="mb-0">Are you sure you want to delete this user?</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+				<button type="button" class="btn btn-danger px-3" id="confirmDeleteBtn">Delete</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- User Modal -->
+<div class="modal fade" id="userModal" tabindex="-1" aria-labelledby="userModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title text-primary" id="userModalLabel"><i class="fa fa-user-edit me-2"></i>Add/Edit User</h5>
+				<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+			</div>
+			<div class="modal-body">
+				<form id="userForm">
+					<input type="hidden" id="userId">
+					<div class="mb-3">
+						<label for="userName" class="form-label">Name</label>
+						<input type="text" class="form-control" id="userName" required autocomplete="off">
+					</div>
+					<div class="mb-3">
+						<label for="userEmail" class="form-label">Email</label>
+						<input type="email" class="form-control" id="userEmail" required autocomplete="off">
+					</div>
+					<div id="formError" class="alert alert-danger d-none"></div>
+					<div class="d-flex justify-content-end gap-2 mt-3">
+						<button type="button" class="btn btn-secondary px-3" data-bs-dismiss="modal">Cancel</button>
+						<button type="submit" class="btn btn-success px-3">
+							<i class="fa fa-save me-1"></i> Save
+						</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+const API_URL = '/user';
+
+// DOM Elements
+const usersTableBody = document.querySelector('#usersTable tbody');
+const userModal = document.getElementById('userModal');
+const userModalLabel = document.getElementById('userModalLabel');
+const userIdInput = document.getElementById('userId');
+const userNameInput = document.getElementById('userName');
+const userEmailInput = document.getElementById('userEmail');
+const formError = document.getElementById('formError');
+const addUserBtn = document.getElementById('addUserBtn');
+const userForm = document.getElementById('userForm');
+const globalAlert = document.getElementById('globalAlert');
+const globalAlertMsg = document.getElementById('globalAlertMsg');
+const confirmDeleteModal = document.getElementById('confirmDeleteModal');
+const confirmDeleteBtn = document.getElementById('confirmDeleteBtn');
+
+let deleteUserId = null;
+
+function showError(msg) {
+	globalAlertMsg.textContent = msg;
+	globalAlert.classList.remove('d-none');
+	globalAlert.classList.add('show');
+	setTimeout(() => {
+		globalAlert.classList.add('d-none');
+		globalAlert.classList.remove('show');
+	}, 5000);
+}
+
+function showFormError(msg) {
+	formError.textContent = msg;
+	formError.classList.remove('d-none');
+}
+function hideFormError() {
+	formError.classList.add('d-none');
+}
+
+async function fetchUsers() {
+	try {
+		const res = await fetch(`${API_URL}/`);
+		if (!res.ok) throw new Error();
+		const users = await res.json();
+		updateUsersTable(users);
+	} catch {
+		showError('Could not fetch users.');
+	}
+}
+
+function updateUsersTable(users) {
+	usersTableBody.innerHTML = '';
+	for (const user of users) {
+		const tr = document.createElement('tr');
+		tr.appendChild(createCell(user.id));
+		tr.appendChild(createCell(user.name));
+		tr.appendChild(createCell(user.email));
+		const actionsTd = document.createElement('td');
+		actionsTd.className = 'text-center';
+		actionsTd.appendChild(createActionBtn('edit', user.id));
+		actionsTd.appendChild(createActionBtn('delete', user.id));
+		tr.appendChild(actionsTd);
+		usersTableBody.appendChild(tr);
+	}
+}
+
+function createCell(text) {
+	const td = document.createElement('td');
+	td.textContent = text;
+	return td;
+}
+
+function createActionBtn(type, id) {
+	const btn = document.createElement('button');
+	btn.className = `btn btn-sm btn-${type === 'edit' ? 'info me-1 edit-user-btn' : 'danger delete-user-btn'}`;
+	btn.dataset.id = id;
+	btn.title = type === 'edit' ? 'Edit' : 'Delete';
+	const icon = document.createElement('i');
+	icon.className = type === 'edit' ? 'fa fa-edit' : 'fa fa-trash';
+	btn.appendChild(icon);
+	return btn;
+}
+
+function openCreateModal() {
+	userModalLabel.textContent = 'Add User';
+	userIdInput.value = '';
+	userNameInput.value = '';
+	userEmailInput.value = '';
+	hideFormError();
+}
+
+async function openEditModal(id) {
+	try {
+		const res = await fetch(`${API_URL}/${id}`);
+		if (!res.ok) throw new Error();
+		const user = await res.json();
+		userModalLabel.textContent = 'Edit User';
+		userIdInput.value = user.id;
+		userNameInput.value = user.name;
+		userEmailInput.value = user.email;
+		hideFormError();
+		new bootstrap.Modal(userModal).show();
+	} catch {
+		showError('Could not load user.');
+	}
+}
+
+function openDeleteModal(id) {
+	deleteUserId = id;
+	new bootstrap.Modal(confirmDeleteModal).show();
+}
+
+confirmDeleteBtn.addEventListener('click', async function() {
+	if (deleteUserId !== null) {
+		try {
+			const res = await fetch(`${API_URL}/${deleteUserId}`, { method: 'DELETE' });
+			if (!res.ok) throw new Error();
+			fetchUsers();
+			bootstrap.Modal.getInstance(confirmDeleteModal).hide();
+		} catch {
+			bootstrap.Modal.getInstance(confirmDeleteModal).hide();
+			showError('Could not delete user.');
+		}
+	}
+});
+
+addUserBtn.addEventListener('click', openCreateModal);
+
+userForm.addEventListener('submit', async function(e) {
+	e.preventDefault();
+	hideFormError();
+	const id = userIdInput.value;
+	const name = userNameInput.value.trim();
+	const email = userEmailInput.value.trim();
+	if (!name || !email) {
+		showFormError('Name and email are required.');
+		return;
+	}
+	const method = id ? 'PUT' : 'POST';
+	const url = id ? `${API_URL}/${id}` : `${API_URL}/`;
+	try {
+		const res = await fetch(url, {
+			method,
+			headers: { 'Content-Type': 'application/json' },
+			body: JSON.stringify({ name, email })
+		});
+		if (res.ok) {
+			bootstrap.Modal.getInstance(userModal).hide();
+			fetchUsers();
+		} else {
+			const data = await res.json();
+			showFormError(data.error || 'Error saving user.');
+		}
+	} catch {
+		showFormError('Error saving user.');
+	}
+});
+
+usersTableBody.addEventListener('click', function(e) {
+	if (e.target.closest('.edit-user-btn')) {
+		const id = e.target.closest('.edit-user-btn').dataset.id;
+		openEditModal(id);
+	} else if (e.target.closest('.delete-user-btn')) {
+		const id = e.target.closest('.delete-user-btn').dataset.id;
+		openDeleteModal(id);
+	}
+});
+
+fetchUsers();
+</script>
+</body>
+</html>
