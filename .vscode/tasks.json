@@ -2,45 +2,24 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "type": "docker-build",
-      "label": "docker-test",
-      "dockerBuild": {
-        "dockerfile": "${workspaceFolder}/docker/test.Dockerfile",
-        "context": "${workspaceFolder}",
-        "tag": "pytest-debug",
-        "pull": true
+      "label": "app:run",
+      "type": "shell",
+      "command": "python main.py",
+      "isBackground": true,
+      "problemMatcher": {
+        "owner": "custom",
+        "pattern": [{ "regexp": "." }],
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": ".",
+          "endsPattern": "Uvicorn running on"
+        }
       }
     },
     {
-      "type": "docker-run",
-      "label": "docker-test-run",
-      "dependsOn": ["docker-test"],
-      "python": {
-        "module": "pytest",
-        "args": ["--cov", "--cov-report=term", "--cov-report=term-missing"]
-      }
-    },
-    {
-      "type": "docker-build",
-      "label": "docker-build",
-      "dockerBuild": {
-        "dockerfile": "${workspaceFolder}/docker/build.Dockerfile",
-        "context": "${workspaceFolder}",
-        "tag": "flask-debug",
-        "pull": true
-      }
-    },
-    {
-      "type": "docker-run",
-      "label": "docker-build-run",
-      "dependsOn": ["docker-build"],
-      "dockerRun": {
-        "ports": [{ "hostPort": 8000, "containerPort": 8000 }]
-      },
-      "python": {
-        "module": "uvicorn",
-        "args": ["main:asgi_app", "--host", "0.0.0.0", "--port", "8000"]
-      }
+      "label": "test:run",
+      "type": "shell",
+      "command": "python -m pytest tests -q"
     }
   ]
 }

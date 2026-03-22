@@ -2,55 +2,24 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "API: Debug",
+      "name": "Flask: Debug App",
       "type": "debugpy",
       "request": "launch",
       "python": "${command:python.interpreterPath}",
       "program": "${workspaceFolder}/main.py",
       "envFile": "${workspaceFolder}/.env",
+      "console": "integratedTerminal",
       "jinja": true
     },
     {
-      "name": "API: Debug (Docker)",
-      "type": "docker",
-      "request": "launch",
-      "preLaunchTask": "docker-build-run",
-      "python": {
-        "pathMappings": [
-          {
-            "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/app"
-          }
-        ],
-        "projectType": "fastapi",
-        "envFile": "${workspaceFolder}/.env",
-        "jinja": true
-      }
-    },
-    {
-      "name": "API: Test",
+      "name": "Flask: Debug Tests",
       "type": "debugpy",
       "request": "launch",
       "python": "${command:python.interpreterPath}",
       "module": "pytest",
+      "args": ["tests", "-q"],
+      "console": "integratedTerminal",
       "jinja": true
-    },
-    {
-      "name": "API: Test (Docker)",
-      "type": "docker",
-      "request": "launch",
-      "preLaunchTask": "docker-test-run",
-      "python": {
-        "pathMappings": [
-          {
-            "localRoot": "${workspaceFolder}",
-            "remoteRoot": "/app"
-          }
-        ],
-        "projectType": "general",
-        "envFile": "${workspaceFolder}/.env",
-        "jinja": true
-      }
     }
   ]
 }

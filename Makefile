@@ -1,31 +1,25 @@
 SHELL := /bin/bash
 
+.PHONY: install install-dev run test docker-build docker-test docker-curl-test
+
 install:
-	uv sync --no-dev
+	./scripts/ubuntu/install.sh
 
 install-dev:
-	uv sync
+	./scripts/ubuntu/install-dev.sh
 
 test:
-	uv run pytest --cov --cov-report=html --cov-report=term --cov-report=term-missing
+	./scripts/ubuntu/test.sh
 
 run:
-	uv run python main.py
+	./scripts/ubuntu/run.sh
 
-cleanup:
-	./scripts/ubuntu/cleanup.sh
+docker-build:
+	docker build -f docker/build.Dockerfile -t flask-template-build .
 
-uninstall:
-	./scripts/ubuntu/uninstall.sh
-
-check:
-	uv run pre-commit run --all-files
-
-upgrade:
-	uv sync --upgrade
-
-pre-commit-install:
-	uv run pre-commit install
+docker-test:
+	docker build -f docker/test.Dockerfile -t flask-template-test .
+	docker run --rm flask-template-test
 
 docker-curl-test:
-	bash tests/docker/test_with_curl.sh
+	./scripts/ubuntu/docker-curl-test.sh

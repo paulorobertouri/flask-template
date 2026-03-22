@@ -16,7 +16,6 @@ Flask API template with service/repository layering, JWT authentication, Swagger
 - `make install-dev` - Install dev dependencies
 - `make run` - Run the application
 - `make test` - Run tests with coverage
-- `make check` - Run linters and type checkers
 - `make docker-build` - Build Docker image
 - `make docker-test` - Run tests in Docker
 - `make docker-curl-test` - Run curl integration tests in Docker
