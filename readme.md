@@ -69,3 +69,26 @@ Or using scripts (Windows):
 - [unittest](https://docs.python.org/3/library/unittest.html)
 - [pytest](https://docs.pytest.org/en/latest/)
 - [flask](https://flask.palletsprojects.com/en/latest/)
+
+## Shared Template Contract
+
+All Python templates in this repository follow the same quality contract.
+
+### Functional Contract
+
+- Keep business logic in service/domain modules.
+- Keep transport/web concerns at API route layer.
+- Keep tests split into fast unit tests and integration/e2e tests where applicable.
+
+### Quality Gates
+
+- Lint must pass.
+- Typecheck must pass.
+- Test suite must pass.
+- Coverage report must be generated on test runs.
+
+### Architecture Contract
+
+- Domain and service logic isolated from framework wiring.
+- Repository or adapter boundaries for persistence/integration concerns.
+- Testable composition with deterministic defaults.

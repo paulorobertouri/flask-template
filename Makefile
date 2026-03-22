@@ -1,17 +1,16 @@
 SHELL := /bin/bash
 
-PYTHON_VERSION := python3
-
-VENV_DIR := .venv
-
 install:
-	./scripts/ubuntu/install.sh
+	uv sync --no-dev
+
+install-dev:
+	uv sync
 
 test:
-	./scripts/ubuntu/test.sh
+	uv run pytest --cov --cov-report=html --cov-report=term --cov-report=term-missing
 
 run:
-	./scripts/ubuntu/run.sh
+	uv run python main.py
 
 cleanup:
 	./scripts/ubuntu/cleanup.sh
@@ -20,10 +19,13 @@ uninstall:
 	./scripts/ubuntu/uninstall.sh
 
 check:
-	./scripts/ubuntu/check.sh
+	uv run pre-commit run --all-files
 
 upgrade:
-	./scripts/ubuntu/upgrade.sh
+	uv sync --upgrade
 
 pre-commit-install:
-	./scripts/ubuntu/install-pre-commit.sh
+	uv run pre-commit install
+
+docker-curl-test:
+	bash tests/docker/test_with_curl.sh

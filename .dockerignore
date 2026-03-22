@@ -1,0 +1,43 @@
+.git/
+.gitignore
+.dockerignore
+.env
+.env.local
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+pnpm-lock.yaml
+package-lock.json
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.py-venv/
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+htmlcov/
+uv.lock
+
+# Build artifacts
+dist/
+build/
+out/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Coverage
+.coverage
+coverage/
+
+# Tests
+test-results.xml

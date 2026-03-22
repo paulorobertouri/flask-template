@@ -1,12 +1,17 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
 
-RUN pip install --upgrade pip
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 WORKDIR /app
 
-COPY . /app
+COPY pyproject.toml ./
+RUN uv sync
 
-COPY ./tests /app/tests
+COPY app/ ./app/
+COPY tests/ ./tests/
+COPY main.py ./
+COPY wwwroot/ ./wwwroot/
 
-RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install --no-cache-dir pytest pytest-mock pytest-cov
+ENV PATH="/app/.venv/bin:$PATH"
+
+CMD ["pytest", "--cov", "--cov-report=term", "--cov-report=term-missing"]

@@ -9,10 +9,10 @@ fi
 
 clear
 
-bash ./scripts/ubuntu/install-dev.sh
+uv sync
 
 source ./scripts/ubuntu/_activate.sh
 
-echo "Running the project"
+echo "Running tests"
 
 python3 -m pytest --cov --cov-report=html --cov-report=term --cov-report=term-missing

@@ -6,18 +6,8 @@ if (Test-Path .\_location.ps1) {
 
 Clear-Host
 
-if (-not (Test-Path .venv)) {
-	Write-Host "Creating Python virtual environment" -ForegroundColor Green
+Write-Host "Installing project dependencies with uv" -ForegroundColor Green
 
-	python -m venv .venv
-}
-
-Write-Host "Activating Python virtual environment" -ForegroundColor Green
-
-.venv\Scripts\Activate.ps1
-
-Write-Host "Installing project dependencies" -ForegroundColor Green
-
-python -m pip install -r requirements.txt
+uv sync --no-dev
 
 Write-Host "Done" -ForegroundColor Green

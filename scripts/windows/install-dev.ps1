@@ -6,10 +6,8 @@ if (Test-Path .\_location.ps1) {
 
 Clear-Host
 
-.\scripts\windows\_activate.ps1
+Write-Host "Installing all dependencies with uv" -ForegroundColor Green
 
-Write-Host "Installing development dependencies" -ForegroundColor Green
-
-python -m pip install -r .\requirements_dev.txt
+uv sync
 
 Write-Host "Done" -ForegroundColor Green

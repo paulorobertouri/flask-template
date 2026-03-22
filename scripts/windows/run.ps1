@@ -10,4 +10,4 @@ Clear-Host
 
 Write-Host "Running the project" -ForegroundColor Green
 
-python .\main.py
+uv run python .\main.py

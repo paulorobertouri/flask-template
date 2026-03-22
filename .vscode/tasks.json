@@ -26,7 +26,7 @@
       "dockerBuild": {
         "dockerfile": "${workspaceFolder}/docker/build.Dockerfile",
         "context": "${workspaceFolder}",
-        "tag": "fastapi-debug",
+        "tag": "flask-debug",
         "pull": true
       }
     },
@@ -34,11 +34,12 @@
       "type": "docker-run",
       "label": "docker-build-run",
       "dependsOn": ["docker-build"],
-      "python": {
-        "file": "main.py"
-      },
       "dockerRun": {
         "ports": [{ "hostPort": 8000, "containerPort": 8000 }]
+      },
+      "python": {
+        "module": "uvicorn",
+        "args": ["main:asgi_app", "--host", "0.0.0.0", "--port", "8000"]
       }
     }
   ]

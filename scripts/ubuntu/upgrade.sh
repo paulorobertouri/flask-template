@@ -9,12 +9,8 @@ fi
 
 clear
 
-source ./scripts/ubuntu/_activate.sh
+echo "Upgrading dependencies"
 
-echo "Installing development dependencies"
+uv sync --upgrade
 
-python3 -m pip install --upgrade pip
-
-python3 -m pip install -r requirements.txt --upgrade
-
-python3 -m pip install -r requirements_dev.txt --upgrade
+echo "Done."

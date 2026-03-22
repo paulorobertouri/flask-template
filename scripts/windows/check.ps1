@@ -6,7 +6,7 @@ if (Test-Path .\_location.ps1) {
 
 Clear-Host
 
-.\scripts\windows\install-dev.ps1
+uv sync
 
 Write-Host "Running pre-commit checks" -ForegroundColor Green
 

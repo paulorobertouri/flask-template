@@ -1,10 +1,2 @@
-flake8
-isort
-mypy
-pre-commit
-pyright
-pytest
-pytest-cov
-pytest-flask
-pytest-md-report
-pytest-mock
+# Dev dependencies are managed via pyproject.toml [dependency-groups.dev]
+# Run: uv sync

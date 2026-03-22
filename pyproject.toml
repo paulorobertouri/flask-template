@@ -1,3 +1,34 @@
+[project]
+name = "flask-template"
+version = "0.1.0"
+description = "Flask template"
+requires-python = ">=3.13"
+dependencies = [
+    "asgiref",
+    "flask",
+    "flask-cors",
+    "flasgger",
+    "PyJWT",
+    "python-dotenv",
+    "uvicorn[standard]",
+]
+
+[dependency-groups]
+dev = [
+    "mypy",
+    "pre-commit",
+    "pyright",
+    "pytest",
+    "pytest-cov",
+    "pytest-flask",
+    "pytest-md-report",
+    "pytest-mock",
+    "ruff",
+]
+
+[tool.uv]
+default-groups = ["dev"]
+
 [tool.pytest.ini_options]
 filterwarnings = [
     "error",
@@ -9,34 +40,40 @@ markers = [
     "component = Component tests"
 ]
 dirs = "tests"
+pythonpath = ["."]
 
-[tool.isort]
-profile = "black"
-multi_line_output = 3
-line_length = 80
-include_trailing_comma = true
-skip_glob = [
-    "**/node_modules",
-    "**/__pycache__",
-    "**/.git",
-    "**/.github",
-    "**/.hg",
-    "**/.mypy_cache",
-    "**/.tox",
-    "**/.venv",
-    "**/.py-venv",
-    "**/venv",
-    "**/py-venv",
-    "**/_build",
-    "**/buck-out",
-    "**/build",
-    "**/dist",
-    "**/htmlcov",
-
-    # The following are specific to Black, you probably don't want those.
-    "**/blib2to3",
-    "**/tests/data"
+[tool.ruff]
+line-length = 80
+exclude = [
+    "node_modules",
+    "__pycache__",
+    ".git",
+    ".github",
+    ".hg",
+    ".mypy_cache",
+    ".tox",
+    ".venv",
+    ".py-venv",
+    "venv",
+    "py-venv",
+    "_build",
+    "buck-out",
+    "build",
+    "dist",
+    "htmlcov",
+    "tests/data"
 ]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "W"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["app"]
+
+[tool.ruff.format]
+quote-style = "double"
+indent-style = "space"
+line-ending = "auto"
 
 [tool.coverage.run]
 omit = [
@@ -45,35 +82,8 @@ omit = [
     "**/debugpy/*"
 ]
 
-[tool.black]
-include = '\.pyi?$'
-line-length = 80
-exclude = '''
-/(
-    node_modules
-    | __pycache__
-    | \.git
-    | \.github
-    | \.hg
-    | \.mypy_cache
-    | \.tox
-    | \.venv
-    | \.py-venv
-    | \venv
-    | py-venv
-    | _build
-    | buck-out
-    | build
-    | dist
-
-    # The following are specific to Black, you probably don't want those.
-    | blib2to3
-    | tests/data
-)
-'''
-
 [tool.mypy]
-python_version = 3.12
+python_version = "3.13"
 ignore_missing_imports = true
 exclude = [
     "node_modules",
@@ -92,8 +102,6 @@ exclude = [
     "build",
     "dist",
     "htmlcov",
-
-    # The following are specific to Black, you probably don't want those.
     "blib2to3",
     "tests/data"
 ]
@@ -101,7 +109,7 @@ exclude = [
 [tool.pyright]
 venvPath = "."
 venv = ".venv"
-pythonVersion = "3.12"
+pythonVersion = "3.13"
 pythonPlatform = "All"
 typeCheckingMode = "standard"
 exclude = [
@@ -121,8 +129,6 @@ exclude = [
     "**/build",
     "**/dist",
     "**/htmlcov",
-
-    # The following are specific to Black, you probably don't want those.
     "**/blib2to3",
     "**/tests/data"
 ]

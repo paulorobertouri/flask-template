@@ -13,4 +13,4 @@ source ./scripts/ubuntu/_activate.sh
 
 echo "Running the project"
 
-python3 ./main.py
+uv run python ./main.py

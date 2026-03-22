@@ -6,12 +6,8 @@ if (Test-Path .\_location.ps1) {
 
 Clear-Host
 
-.\scripts\windows\_activate.ps1
+Write-Host "Upgrading dependencies" -ForegroundColor Green
 
-Write-Host "Installing development dependencies" -ForegroundColor Green
+uv sync --upgrade
 
-python -m pip install --upgrade pip
-
-python -m pip install -r .\requirements.txt --upgrade
-
-python -m pip install -r .\requirements_dev.txt --upgrade
+Write-Host "Done" -ForegroundColor Green

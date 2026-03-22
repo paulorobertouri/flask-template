@@ -9,7 +9,7 @@ fi
 
 clear
 
-bash ./scripts/ubuntu/install-dev.sh
+uv sync
 
 source ./scripts/ubuntu/_activate.sh
 

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# About: This script is used to run the project on Linux.
+# About: This script is used to install pre-commit hooks.
 
 if [ -f "_location.sh" ]; then
 	# shellcheck source=./scripts/ubuntu/_location.sh
@@ -9,7 +9,7 @@ fi
 
 clear
 
-bash ./scripts/ubuntu/install-dev.sh
+uv sync
 
 source ./scripts/ubuntu/_activate.sh
 

@@ -2,7 +2,8 @@
 # shellcheck shell=ksh
 
 if [ ! -d .venv ]; then
-    bash ./scripts/ubuntu/install.sh
+    echo "Creating virtual environment with uv"
+    uv sync
 fi
 
 echo "Activating Python virtual environment"

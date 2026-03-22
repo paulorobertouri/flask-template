@@ -1,3 +1,2 @@
-Flask
-flask-cors
-python-dotenv
+# Dependencies are managed via pyproject.toml
+# Run: uv sync

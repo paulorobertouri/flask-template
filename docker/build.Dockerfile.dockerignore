@@ -161,6 +161,5 @@ tests/
 .gitignore
 .pre-commit-config.yaml
 Makefile
-pyproject.toml
 README.md
 requirements_dev.txt

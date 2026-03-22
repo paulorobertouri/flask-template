@@ -6,7 +6,9 @@ if (Test-Path .\_location.ps1) {
 
 Clear-Host
 
-.\scripts\windows\install-dev.ps1
+uv sync
+
+.\scripts\windows\_activate.ps1
 
 Write-Host "Running tests" -ForegroundColor Green
 

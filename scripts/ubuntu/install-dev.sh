@@ -9,10 +9,8 @@ fi
 
 clear
 
-source ./scripts/ubuntu/_activate.sh
+echo "Installing all dependencies with uv"
 
-echo "Installing development dependencies"
-
-python3 -m pip install -r requirements_dev.txt
+uv sync
 
 echo "Done."

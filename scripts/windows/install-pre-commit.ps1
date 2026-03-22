@@ -6,12 +6,10 @@ if (Test-Path .\_location.ps1) {
 
 Clear-Host
 
-.\scripts\windows\install-dev.ps1
+uv sync
 
 Write-Host "Installing pre-commit hooks" -ForegroundColor Green
 
 pre-commit install
-
-mypy --install-types --non-interactive
 
 Write-Host "Done" -ForegroundColor Green

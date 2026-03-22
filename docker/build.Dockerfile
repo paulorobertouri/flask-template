@@ -1,15 +1,20 @@
-FROM python:3.12-slim
+FROM python:3.13-slim
+
+COPY --from=ghcr.io/astral-sh/uv:latest /uv /bin/uv
 
 RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
-RUN pip install --upgrade pip
-
 WORKDIR /app
 
-COPY . /app
+COPY pyproject.toml ./
+RUN uv sync --no-dev
 
-RUN pip install --no-cache-dir -r requirements.txt
+COPY app/ ./app/
+COPY main.py ./
+COPY wwwroot/ ./wwwroot/
 
-CMD ["python", "./main.py"]
+ENV PATH="/app/.venv/bin:$PATH"
+
+CMD ["uvicorn", "main:asgi_app", "--host", "0.0.0.0", "--port", "8000"]
