@@ -4,7 +4,7 @@ from app import app
 def test_v1_customer_auth_public_private_and_swagger() -> None:
     client = app.test_client()
 
-    swagger_response = client.get("/apidocs/")
+    swagger_response = client.get("/docs")
     assert swagger_response.status_code == 200
 
     customer_response = client.get("/v1/customer")

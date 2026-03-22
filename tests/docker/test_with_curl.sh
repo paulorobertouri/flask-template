@@ -13,7 +13,7 @@ docker build -f docker/build.Dockerfile -t "$IMAGE" .
 docker run -d --name "$CONTAINER" -p 38080:8000 "$IMAGE"
 sleep 3
 
-curl -fsS http://127.0.0.1:38080/apidocs/ >/dev/null
+curl -fsS http://127.0.0.1:38080/docs >/dev/null
 curl -fsS http://127.0.0.1:38080/v1/customer >/dev/null
 
 RAW_HEADERS=$(curl -isS http://127.0.0.1:38080/v1/auth/login)

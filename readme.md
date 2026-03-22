@@ -1,74 +1,77 @@
-# Python Web Template
+# Flask Template
 
-This project showcases example of a web application with tests.
+Flask API template with service/repository layering, JWT authentication, Swagger docs, and test coverage.
 
-This project can be used as a template for new Python projects, providing a structured layout and examples of unit tests for different scenarios and functionalities. By exploring the examples and best practices in this project, you can learn how to write effective unit tests and improve the quality of your codebase.
+## Stack
 
-## How to Run the Application
+- Flask + Flasgger
+- PyJWT + python-dotenv
+- Ruff + mypy
+- Pytest + coverage
+- uv (package manager)
 
-To run the application, you can use the following command:
+## Commands
 
-```bash
-make run
+- `make install` - Install dependencies
+- `make install-dev` - Install dev dependencies
+- `make run` - Run the application
+- `make test` - Run tests with coverage
+- `make check` - Run linters and type checkers
+- `make docker-build` - Build Docker image
+- `make docker-test` - Run tests in Docker
+- `make docker-curl-test` - Run curl integration tests in Docker
+
+## Endpoints
+
+- GET /docs - Swagger documentation
+- GET /health - Health check
+- GET /v1/public - Public endpoint
+- GET /v1/customer - Customer list endpoint
+- GET /v1/auth/login - Login endpoint (returns JWT)
+- GET /v1/private - Protected endpoint (requires Authorization header)
+
+## JWT Contract
+
+Login returns:
+- Body: {"token":"..."}
+- Header: Authorization: Bearer <token>
+- Header: X-JWT-Token: <token>
+
+## Environment Variables
+
+- PORT=8000
+- JWT_SECRET=your-super-secret-jwt-key-at-least-32-characters-long-for-hs256
+- JWT_ALGORITHM=HS256
+- JWT_EXPIRY_MINUTES=60
+- FLASK_ENV=development
+
+## Project Structure
+
+```text
+.
+├── main.py                 # Entry point (ASGI wrapper with Uvicorn)
+├── app/
+│   ├── __init__.py        # Flask app setup
+│   ├── api/
+│   │   └── v1_routes.py   # API route handlers
+│   ├── services/          # Business logic
+│   ├── repositories/      # Data access abstraction
+│   └── domain/            # Domain models
+├── tests/
+│   ├── e2e/               # Integration/E2E tests
+│   ├── unit/              # Unit tests
+│   └── docker/            # Docker acceptance tests
+└── docker/
+    ├── build.Dockerfile   # Production image
+    └── test.Dockerfile    # Test image
 ```
 
-Or using scripts (Ubuntu):
+## Architecture
 
-```bash
-./scripts/ubuntu/run.sh
-```
-
-Or using scripts (Windows):
-
-```bash
-./scripts/windows/run.ps1
-```
-
-## How to Run the Tests
-
-To run the tests with coverage measurement, you can use the following command:
-
-```bash
-make test
-```
-
-Or using scripts (Ubuntu):
-
-```bash
-./scripts/ubuntu/test.sh
-```
-
-Or using scripts (Windows):
-
-```bash
-./scripts/windows/test.ps1
-```
-
-## How to Run the Linters
-
-To run the linters, you can use the following command:
-
-```bash
-make check
-```
-
-Or using scripts (Ubuntu):
-
-```bash
-./scripts/ubuntu/check.sh
-```
-
-Or using scripts (Windows):
-
-```bash
-./scripts/windows/check.ps1
-```
-
-## References
-
-- [unittest](https://docs.python.org/3/library/unittest.html)
-- [pytest](https://docs.pytest.org/en/latest/)
-- [flask](https://flask.palletsprojects.com/en/latest/)
+- `app/services`: business services
+- `app/repositories`: data-access abstractions
+- `app/domain`: domain models
+- `tests`: unit and e2e suites
 
 ## Shared Template Contract
 

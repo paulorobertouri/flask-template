@@ -8,7 +8,7 @@ try {
   docker run -d --name $container -p 38080:8000 $image | Out-Null
   Start-Sleep -Seconds 3
 
-  Invoke-WebRequest -UseBasicParsing http://127.0.0.1:38080/apidocs/ | Out-Null
+  Invoke-WebRequest -UseBasicParsing http://127.0.0.1:38080/docs | Out-Null
   Invoke-WebRequest -UseBasicParsing http://127.0.0.1:38080/v1/customer | Out-Null
 
   $login = Invoke-WebRequest -UseBasicParsing http://127.0.0.1:38080/v1/auth/login
