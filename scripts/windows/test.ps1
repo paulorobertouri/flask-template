@@ -1,15 +1,3 @@
-# About: This script is used to test the project on Windows.
-
-if (Test-Path .\_location.ps1) {
-	.\_location.ps1
-}
-
-Clear-Host
-
+$ErrorActionPreference = "Stop"
 uv sync
-
-.\scripts\windows\_activate.ps1
-
-Write-Host "Running tests" -ForegroundColor Green
-
-python -m pytest --cov --cov-report=html --cov-report=term --cov-report=term-missing
+uv run pytest --cov --cov-report=html --cov-report=term --cov-report=term-missing
