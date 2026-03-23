@@ -1,4 +1,4 @@
-from app import app
+from app import app  # type: ignore
 
 
 def test_v1_customer_auth_public_private_and_swagger() -> None:

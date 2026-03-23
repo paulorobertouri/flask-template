@@ -5,34 +5,39 @@ from app.user.models import User, UserRequest
 
 
 class UserDatabase:
-    def __init__(self, db_path):
+    def __init__(self, db_path: str) -> None:
         if db_path not in (":memory:", "file::memory:?cache=shared"):
             db_dir = os.path.dirname(db_path)
             if db_dir and not os.path.exists(db_dir):
                 os.makedirs(db_dir, exist_ok=True)
-        self.__conn = sqlite3.connect(db_path)
-        self.__conn.row_factory = sqlite3.Row
+        self.__conn: sqlite3.Connection | None = sqlite3.connect(db_path)
+        # row_factory is available when connection is not None
+        if self.__conn is not None:
+            self.__conn.row_factory = sqlite3.Row
         self.__initialize_db()
 
-    def close(self):
+    def close(self) -> None:
         if getattr(self, "_UserDatabase__conn", None):
             try:
-                self.__conn.close()
+                if self.__conn is not None:
+                    self.__conn.close()
             except Exception:
                 pass
             finally:
                 self.__conn = None
 
-    def __del__(self):
+    def __del__(self) -> None:
         try:
             self.close()
         except Exception:
             pass
 
-    def __get_connection(self):
+    def __get_connection(self) -> sqlite3.Connection:
+        if self.__conn is None:
+            raise RuntimeError("Database connection is closed")
         return self.__conn
 
-    def __initialize_db(self):
+    def __initialize_db(self) -> None:
         conn = self.__get_connection()
         conn.execute(
             """
@@ -45,7 +50,7 @@ class UserDatabase:
         )
         conn.commit()
 
-    def get_all(self):
+    def get_all(self) -> list[User]:
         conn = self.__get_connection()
         users = conn.execute("SELECT * FROM users").fetchall()
         return [
@@ -57,7 +62,7 @@ class UserDatabase:
             for user in users
         ]
 
-    def exists(self, id):
+    def exists(self, id: int) -> bool:
         conn = self.__get_connection()
         user = conn.execute(
             "SELECT * FROM users WHERE id = ?",
@@ -65,7 +70,7 @@ class UserDatabase:
         ).fetchone()
         return user is not None
 
-    def get(self, id):
+    def get(self, id: int) -> User | None:
         conn = self.__get_connection()
         user = conn.execute(
             "SELECT * FROM users WHERE id = ?",
@@ -79,7 +84,7 @@ class UserDatabase:
             )
         return None
 
-    def create(self, model: UserRequest):
+    def create(self, model: UserRequest) -> User | None:
         conn = self.__get_connection()
         cur = conn.execute(
             "INSERT INTO users (name, email) VALUES (?, ?)",
@@ -87,9 +92,11 @@ class UserDatabase:
         )
         conn.commit()
         user_id = cur.lastrowid
-        return self.get(user_id)
+        if user_id is None:
+            return None
+        return self.get(int(user_id))
 
-    def update(self, id, model: UserRequest):
+    def update(self, id: int, model: UserRequest) -> User | None:
         conn = self.__get_connection()
         user = self.get(id)
         if not user:
@@ -103,12 +110,12 @@ class UserDatabase:
         conn.commit()
         return self.get(id)
 
-    def delete(self, id):
+    def delete(self, id: int) -> None:
         conn = self.__get_connection()
         conn.execute("DELETE FROM users WHERE id = ?", (id,))
         conn.commit()
 
-    def email_exists(self, email, exclude_id=None):
+    def email_exists(self, email: str, exclude_id: int | None = None) -> bool:
         conn = self.__get_connection()
         if exclude_id:
             user = conn.execute(

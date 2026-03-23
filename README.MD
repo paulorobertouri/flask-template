@@ -22,6 +22,7 @@ Flask API template with service/repository layering, JWT authentication, Swagger
 ## JWT Contract
 
 Login returns:
+
 - Body: `{"token":"..."}`
 - Header: `Authorization: Bearer <token>`
 - Header: `X-JWT-Token: <token>`

@@ -20,7 +20,6 @@ def client(app):
 
 
 def test_get_all_users(client):
-
     with patch("app.user_routes.get_database") as mock_get_db:
         mock_db = MagicMock()
         mock_db.get_all.return_value = [
