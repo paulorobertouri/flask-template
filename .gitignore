@@ -133,3 +133,5 @@ secret.py
 .benchmarks
 /site
 .promptflow
+
+pnpm-lock.yaml
