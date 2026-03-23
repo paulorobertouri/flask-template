@@ -13,18 +13,16 @@ app.register_blueprint(demo_routes)
 app.register_blueprint(user_routes, url_prefix="/user")
 app.register_blueprint(v1_routes)
 CORS(app)
-Swagger(app, config={
-    "specs": [
-        {
-            "endpoint": "swagger",
-            "route": "/swagger.json"
-        }
-    ],
-    "static_url_path": "/flasgger_static",
-    "swagger_ui": True,
-    "specs_route": "/docs",
-    "headers": []
-})
+Swagger(
+    app,
+    config={
+        "specs": [{"endpoint": "swagger", "route": "/swagger.json"}],
+        "static_url_path": "/flasgger_static",
+        "swagger_ui": True,
+        "specs_route": "/docs",
+        "headers": [],
+    },
+)
 
 
 # Serve index.html at the root

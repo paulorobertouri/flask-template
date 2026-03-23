@@ -1,6 +1,6 @@
 SHELL := /bin/bash
 
-.PHONY: install install-dev run test docker-build docker-test docker-curl-test
+.PHONY: install install-dev run test format docker-build docker-test docker-curl-test
 
 install:
 	./scripts/ubuntu/install.sh
@@ -10,6 +10,9 @@ install-dev:
 
 test:
 	./scripts/ubuntu/test.sh
+
+format:
+	bash ./scripts/ubuntu/format.sh
 
 run:
 	./scripts/ubuntu/run.sh
