@@ -7,7 +7,11 @@ from app.user.models import UserRequest
 @pytest.fixture
 def db():
     # Use in-memory SQLite DB for isolation
-    return UserDatabase(":memory:")
+    db = UserDatabase(":memory:")
+    try:
+        yield db
+    finally:
+        db.close()
 
 
 def test_create_and_get_user(db):

@@ -14,6 +14,21 @@ class UserDatabase:
         self.__conn.row_factory = sqlite3.Row
         self.__initialize_db()
 
+    def close(self):
+        if getattr(self, "_UserDatabase__conn", None):
+            try:
+                self.__conn.close()
+            except Exception:
+                pass
+            finally:
+                self.__conn = None
+
+    def __del__(self):
+        try:
+            self.close()
+        except Exception:
+            pass
+
     def __get_connection(self):
         return self.__conn
 
