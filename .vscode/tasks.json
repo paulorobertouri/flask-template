@@ -20,6 +20,36 @@
       "label": "test:run",
       "type": "shell",
       "command": "python -m pytest tests -q"
+    },
+    {
+      "label": "build",
+      "type": "shell",
+      "command": "bash ./scripts/ubuntu/build.sh"
+    },
+    {
+      "label": "lint",
+      "type": "shell",
+      "command": "bash ./scripts/ubuntu/lint.sh"
+    },
+    {
+      "label": "format",
+      "type": "shell",
+      "command": "bash ./scripts/ubuntu/format.sh"
+    },
+    {
+      "label": "docker:up",
+      "type": "shell",
+      "command": "docker compose up --build"
+    },
+    {
+      "label": "docker:down",
+      "type": "shell",
+      "command": "docker compose down"
+    },
+    {
+      "label": "docker:curl-test",
+      "type": "shell",
+      "command": "bash ./scripts/ubuntu/docker-curl-test.sh"
     }
   ]
 }
