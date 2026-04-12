@@ -1,6 +1,6 @@
 # flask-template
 
-Flask API template with service/repository layering, JWT authentication, Swagger docs, and test coverage.
+Production-ready Flask API template with service/repository layering, JWT authentication, Swagger docs, and test coverage.
 
 ## Stack
 
