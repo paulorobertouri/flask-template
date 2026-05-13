@@ -1,43 +1,35 @@
-.git/
+.git
 .gitignore
 .dockerignore
-.env
-.env.local
-.DS_Store
-Thumbs.db
 
-# Node
-node_modules/
-npm-debug.log
-yarn-error.log
-pnpm-lock.yaml
-package-lock.json
-
-# Python
 __pycache__/
 *.py[cod]
 .venv/
+venv/
+env/
 .py-venv/
-*.egg-info/
-.pytest_cache/
-.mypy_cache/
+py-venv/
+
 .ruff_cache/
+.mypy_cache/
+.pytest_cache/
+.hypothesis/
 htmlcov/
-uv.lock
+.coverage*
 
-# Build artifacts
-dist/
 build/
-out/
+dist/
+*.egg-info/
 
-# IDE
 .vscode/
 .idea/
 *.swp
+*.swo
 
-# Coverage
-.coverage
-coverage/
+.env
+.env.local
+.env.*.local
 
-# Tests
-test-results.xml
+tests/
+playwright-report/
+test-results/

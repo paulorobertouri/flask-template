@@ -1,2 +1,0 @@
-# Dev dependencies are managed via pyproject.toml [dependency-groups.dev]
-# Run: uv sync
