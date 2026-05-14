@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify
+from flask import Blueprint, jsonify, request
 
 from app.core.dependencies import get_auth_service, get_list_customers_use_case
 
@@ -25,3 +25,19 @@ def login():
 @v1_bp.route("/public", methods=["GET"])
 def public():
     return jsonify({"message": "public endpoint"})
+
+
+@v1_bp.route("/private", methods=["GET"])
+def private():
+    authorization = request.headers.get("Authorization", "")
+    if not authorization.startswith("Bearer "):
+        return jsonify({"detail": "Missing bearer token"}), 401
+
+    token = authorization.removeprefix("Bearer ").strip()
+    if not token:
+        return jsonify({"detail": "Missing bearer token"}), 401
+
+    payload = get_auth_service().decode_token(token)
+    return jsonify(
+        {"message": "private endpoint", "subject": payload.get("sub")},
+    )

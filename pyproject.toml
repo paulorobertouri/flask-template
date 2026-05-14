@@ -8,6 +8,7 @@ dependencies = [
     "flask",
     "flask-cors",
     "flasgger",
+    "pydantic",
     "PyJWT",
     "python-dotenv",
     "uvicorn[standard]",
