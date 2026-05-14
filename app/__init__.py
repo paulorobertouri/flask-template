@@ -1,5 +1,5 @@
-from flask import Flask, send_from_directory
 from flasgger import Swagger
+from flask import Flask, send_from_directory
 
 from app.interface.api.health import health_bp
 from app.interface.api.v1.routes import v1_bp
