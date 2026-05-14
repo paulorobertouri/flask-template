@@ -1,8 +1,9 @@
 from functools import lru_cache
+
+from app.application.use_cases.list_customers import ListCustomersUseCase
 from app.infrastructure.repositories.sqlite_customer_repository import (
     SQLiteCustomerRepository,
 )
-from app.application.use_cases.list_customers import ListCustomersUseCase
 from app.services.auth_service import AuthService
 
 

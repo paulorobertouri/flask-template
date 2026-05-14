@@ -1,4 +1,5 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify
+
 from app.core.dependencies import get_auth_service, get_list_customers_use_case
 
 v1_bp = Blueprint("v1", __name__)
