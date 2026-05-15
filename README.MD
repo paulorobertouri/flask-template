@@ -37,6 +37,11 @@ Login returns:
 - `make docker-test` — run tests in Docker
 - `make docker-curl-test` — run curl integration tests in Docker
 
+## Screenshots
+
+- Run `make test-e2e` to regenerate the browser evidence.
+- The Playwright screenshots are written to `tests/e2e/screenshots/`.
+
 ## Environment Variables
 
 - `PORT=8000`
