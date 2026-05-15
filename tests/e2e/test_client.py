@@ -38,11 +38,16 @@ def server():
 
 def test_home_page_shows_customers(page: Page):
     page.goto("http://127.0.0.1:8003/static/index.html")
+    page.wait_for_load_state("networkidle")
 
     heading = page.get_by_role("heading", name="Flask Template Demo")
     expect(heading).to_be_visible()
-    expect(page.locator("#status")).to_have_text("ok")
-    expect(page.get_by_text("Ana Flask")).to_be_visible()
-    expect(page.get_by_text("Bruno Flask")).to_be_visible()
+
+    # The UI populates data asynchronously from API calls.
+    expect(page.locator("#status")).to_have_text("ok", timeout=15_000)
+    customers = page.locator("#customers .card")
+    expect(customers).to_have_count(2, timeout=15_000)
+    expect(page.get_by_text("Ana Flask")).to_be_visible(timeout=15_000)
+    expect(page.get_by_text("Bruno Flask")).to_be_visible(timeout=15_000)
 
     page.screenshot(path=f"{SCREENSHOT_DIR}/home_page.png")
