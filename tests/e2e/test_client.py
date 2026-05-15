@@ -1,6 +1,8 @@
 import os
 import threading
 import time
+from urllib.error import URLError
+from urllib.request import urlopen
 
 import pytest
 import uvicorn
@@ -20,7 +22,17 @@ def run_server():
 def server():
     thread = threading.Thread(target=run_server, daemon=True)
     thread.start()
-    time.sleep(1)
+
+    deadline = time.time() + 15
+    while time.time() < deadline:
+        try:
+            with urlopen("http://127.0.0.1:8003/health", timeout=1):
+                break
+        except URLError:
+            time.sleep(0.2)
+    else:
+        raise RuntimeError("Flask test server did not become ready in time")
+
     yield
 
 
