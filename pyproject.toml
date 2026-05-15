@@ -20,7 +20,9 @@ default-groups = ["dev"]
 [dependency-groups]
 dev = [
     "mypy",
+    "playwright",
     "pre-commit",
+    "pytest-playwright",
     "pyright",
     "pytest",
     "pytest-cov",
