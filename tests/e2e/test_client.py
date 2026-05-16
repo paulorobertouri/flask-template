@@ -38,19 +38,19 @@ def server():
 
 def test_home_page_shows_customers(page: Page):
     page.goto("http://127.0.0.1:8003/static/index.html")
-    
+
     # Wait for the page to load and initial scripts to run
     page.wait_for_load_state("networkidle")
-    
+
     # Verify heading is present
     heading = page.get_by_role("heading", name="Flask Template Demo")
     expect(heading).to_be_visible()
-    
-    # Wait for status to update from API (this is the trigger that JS fetch completed)
+
+    # Wait for status API call to complete
     status = page.locator("#status")
     expect(status).not_to_have_text("Checking...", timeout=15_000)
     expect(status).to_have_text("ok", timeout=15_000)
-    
+
     # Once status is "ok", customers should be loaded too
     customers = page.locator("#customers .card")
     expect(customers).to_have_count(2, timeout=5_000)
