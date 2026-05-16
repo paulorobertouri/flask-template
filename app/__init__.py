@@ -12,6 +12,7 @@ def create_app() -> Flask:
 
     # Static files for the demo client
     public_dir = str(Path(__file__).parent.parent / "public")
+
     @app.route("/static/<path:path>")
     def send_static(path):
         return send_from_directory(public_dir, path)
