@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from flasgger import Swagger
 from flask import Flask, send_from_directory
 
@@ -9,9 +11,10 @@ def create_app() -> Flask:
     app = Flask(__name__)
 
     # Static files for the demo client
+    public_dir = str(Path(__file__).parent.parent / "public")
     @app.route("/static/<path:path>")
     def send_static(path):
-        return send_from_directory("../public", path)
+        return send_from_directory(public_dir, path)
 
     app.register_blueprint(health_bp)
     app.register_blueprint(v1_bp, url_prefix="/v1")
