@@ -1,10 +1,14 @@
 import sqlite3
+from pathlib import Path
 
 from app.domain.customer import Customer, CustomerRepository
 
 
 class SQLiteCustomerRepository(CustomerRepository):
-    def __init__(self, db_path: str = "customers.db") -> None:
+    def __init__(self, db_path: str = None) -> None:
+        if db_path is None:
+            # Use temp directory to ensure database is accessible regardless of working directory
+            db_path = str(Path(__file__).parent.parent.parent.parent / "customers.db")
         self.db_path = db_path
         self._init_db()
 
