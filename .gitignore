@@ -5,23 +5,26 @@ env/
 .py-venv/
 py-venv/
 ENV/
+.virtualenv/
 
 # Python bytecode and caches
 __pycache__/
 *.py[cod]
 *$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+.eggs/
+*.whl
 .ruff_cache/
 .mypy_cache/
 .pytest_cache/
 .hypothesis/
-.cache/
-
-# Build artifacts
-build/
-dist/
-*.egg-info/
-.eggs/
 pip-wheel-metadata/
+.cache/
+.env.d/
 
 # Test and coverage
 htmlcov/
@@ -30,21 +33,28 @@ htmlcov/
 coverage.xml
 *.cover
 test-results.xml
+TestResults/
 
-# Logs and local DB
+# Logs and database
 *.log
 *.db
 *.sqlite
 *.sqlite3
+celerybeat-schedule
+instance/
 
 # Tooling
 .python-version
 .ipynb_checkpoints/
+jupyter_notebook_config.py
+.pyre/
+.pytype/
 
 # Environment variables
 .env
 .env.local
 .env.*.local
+.env.prod
 
 # IDE
 .idea/
@@ -52,11 +62,19 @@ test-results.xml
 *.iml
 *.swp
 *.swo
+*.sublime-project
+*.sublime-workspace
+*.code-workspace
 
 # OS
 .DS_Store
+.AppleDouble
 Thumbs.db
 
-# Test results
+# Test results and reports
 playwright-report/
 test-results/
+
+# Misc
+.turbo/
+node_modules/

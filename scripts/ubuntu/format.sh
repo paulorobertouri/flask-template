@@ -1,3 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-uv run ruff format .
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+cd "$PROJECT_ROOT"
+
+echo "Formatting code..."

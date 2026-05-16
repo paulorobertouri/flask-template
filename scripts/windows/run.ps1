@@ -1,2 +1,8 @@
 $ErrorActionPreference = "Stop"
-uv run python .\main.py
+
+$ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
+$ProjectRoot = Split-Path -Parent (Split-Path -Parent $ScriptDir)
+
+Set-Location $ProjectRoot
+
+uv run python main.py

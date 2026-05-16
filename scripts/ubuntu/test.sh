@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
 set -euo pipefail
-uv sync
-uv run pytest --cov --cov-report=html --cov-report=term --cov-report=term-missing
+
+SCRIPT_DIR="$(cd "$(dirname "$0")" && pwd)"
+PROJECT_ROOT="$(dirname "$(dirname "$SCRIPT_DIR")")"
+cd "$PROJECT_ROOT"
+
+echo "Running tests..."

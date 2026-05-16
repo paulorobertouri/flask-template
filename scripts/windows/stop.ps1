@@ -5,4 +5,5 @@ $ProjectRoot = Split-Path -Parent (Split-Path -Parent $ScriptDir)
 
 Set-Location $ProjectRoot
 
-bash tests/docker/test_with_curl.sh
+Write-Output "Stopping dev server..."
+docker compose down
