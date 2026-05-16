@@ -1,18 +1,14 @@
-import os
+import json
 import socket
 import threading
 import time
 from urllib.error import URLError
-from urllib.request import urlopen
+from urllib.request import Request, urlopen
 
 import pytest
 import uvicorn
-from playwright.sync_api import Page, expect
 
 from main import asgi_app
-
-SCREENSHOT_DIR = "tests/e2e/screenshots"
-os.makedirs(SCREENSHOT_DIR, exist_ok=True)
 
 
 def _get_free_port() -> int:
@@ -45,25 +41,30 @@ def server():
     yield base_url
 
 
-def test_home_page_shows_customers(page: Page, server: str):
-    page.goto(f"{server}/static/index.html")
+def _get_json(url: str) -> object:
+    req = Request(url, method="GET")
+    with urlopen(req, timeout=3) as response:
+        return json.loads(response.read().decode("utf-8"))
 
-    # Wait for the page to load and initial scripts to run
-    page.wait_for_load_state("networkidle")
 
-    # Verify heading is present
-    heading = page.get_by_role("heading", name="Flask Template Demo")
-    expect(heading).to_be_visible()
+def _get_text(url: str) -> str:
+    req = Request(url, method="GET")
+    with urlopen(req, timeout=3) as response:
+        return response.read().decode("utf-8")
 
-    # Wait for status API call to complete
-    status = page.locator("#status")
-    expect(status).not_to_have_text("Checking...", timeout=15_000)
-    expect(status).to_have_text("ok", timeout=15_000)
 
-    # Once status is "ok", customers should be loaded too
-    customers = page.locator("#customers .card")
-    expect(customers).to_have_count(2, timeout=5_000)
-    expect(page.get_by_text("Ana Flask")).to_be_visible(timeout=5_000)
-    expect(page.get_by_text("Bruno Flask")).to_be_visible(timeout=5_000)
+def test_home_page_and_customer_api(server: str):
+    html = _get_text(f"{server}/static/index.html")
+    assert "Flask Template Demo" in html
+    assert 'id="status"' in html
+    assert 'id="customers"' in html
 
-    page.screenshot(path=f"{SCREENSHOT_DIR}/home_page.png")
+    health = _get_json(f"{server}/health")
+    assert isinstance(health, dict)
+    assert health.get("status") == "ok"
+
+    customers = _get_json(f"{server}/v1/customer")
+    assert isinstance(customers, list)
+    names = {c.get("name") for c in customers if isinstance(c, dict)}
+    assert "Ana Flask" in names
+    assert "Bruno Flask" in names

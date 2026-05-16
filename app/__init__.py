@@ -8,7 +8,7 @@ from app.interface.api.v1.routes import v1_bp
 
 
 def create_app() -> Flask:
-    app = Flask(__name__)
+    app = Flask(__name__, static_folder=None)
 
     # Static files for the demo client
     public_dir = str(Path(__file__).parent.parent / "public")
