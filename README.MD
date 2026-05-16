@@ -32,10 +32,13 @@ Login returns:
 - `make install` — install production dependencies
 - `make install-dev` — install dev dependencies
 - `make run` — run the application
-- `make test` — run tests with coverage
+- `make test` — run all tests with coverage
+- `make test-unit` — run unit tests
+- `make test-e2e` — run browser e2e tests
+- `make lint` — lint the code
+- `make format` — format the code
 - `make docker-build` — build Docker image
 - `make docker-test` — run tests in Docker
-- `make docker-curl-test` — run curl integration tests in Docker
 
 ## Environment Variables
 
