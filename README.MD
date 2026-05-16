@@ -37,12 +37,6 @@ Login returns:
 - `make docker-test` — run tests in Docker
 - `make docker-curl-test` — run curl integration tests in Docker
 
-## Screenshots
-
-Run `make test-e2e` to regenerate.
-
-![Home Page](tests/e2e/evidence/01_home_page.png)
-
 ## Environment Variables
 
 - `PORT=8000`
@@ -84,3 +78,7 @@ HTTP -> API Routes -> JWT Middleware -> Services -> Repositories -> Domain
 - Typecheck must pass.
 - Test suite must pass.
 - Coverage report generated on test runs.
+
+## License
+
+MIT — see [LICENSE](LICENSE).
