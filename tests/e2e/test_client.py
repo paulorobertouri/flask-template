@@ -1,4 +1,5 @@
 import json
+import os
 import socket
 import threading
 import time
@@ -7,6 +8,7 @@ from urllib.request import Request, urlopen
 
 import pytest
 import uvicorn
+from playwright.sync_api import Page
 
 from main import asgi_app
 
@@ -53,7 +55,7 @@ def _get_text(url: str) -> str:
         return response.read().decode("utf-8")
 
 
-def test_home_page_and_customer_api(server: str):
+def test_home_page_and_customer_api(server: str, page: Page):
     html = _get_text(f"{server}/static/index.html")
     assert "Flask Template Demo" in html
     assert 'id="status"' in html
@@ -68,3 +70,9 @@ def test_home_page_and_customer_api(server: str):
     names = {c.get("name") for c in customers if isinstance(c, dict)}
     assert "Ana Flask" in names
     assert "Bruno Flask" in names
+
+    # Capture browser evidence
+    evidence_dir = "tests/e2e/evidence"
+    os.makedirs(evidence_dir, exist_ok=True)
+    page.goto(f"{server}/static/index.html")
+    page.screenshot(path=f"{evidence_dir}/01_home_page.png", full_page=True)

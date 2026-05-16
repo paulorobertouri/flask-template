@@ -39,7 +39,7 @@ test-unit:
 	pytest tests/unit
 
 test-e2e:
-	pytest tests/e2e
+	pytest tests/e2e --browser-channel chrome
 
 coverage:
 	pytest --cov=app --cov-report=html tests/unit

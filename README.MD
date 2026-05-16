@@ -39,8 +39,9 @@ Login returns:
 
 ## Screenshots
 
-- Run `make test-e2e` to regenerate the browser evidence.
-- The Playwright screenshots are written to `tests/e2e/screenshots/`.
+Run `make test-e2e` to regenerate.
+
+![Home Page](tests/e2e/evidence/01_home_page.png)
 
 ## Environment Variables
 
